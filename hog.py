@@ -24,7 +24,8 @@ def roll_dice(num_rolls, dice=six_sided):
     "*** YOUR CODE HERE ***"
     sum = 0
     for i in range(num_rolls):
-        roll = six_sided()
+        roll = dice()
+        print(f"roll: {roll}")
         if roll == 1:
             return 1
         sum += roll
@@ -44,6 +45,9 @@ def take_turn(num_rolls, opponent_score, dice=six_sided):
     assert num_rolls <= 10, 'Cannot roll more than 10 dice.'
     assert opponent_score < 100, 'The game should be over.'
     "*** YOUR CODE HERE ***"
+    if num_rolls == 0:
+        return max([int(opponent_score) / 10 , int(opponent_score % 10)]) + 1
+    return roll_dice(num_rolls,dice)
 
 # Playing a game
 
