@@ -46,7 +46,7 @@ def take_turn(num_rolls, opponent_score, dice=six_sided):
     assert opponent_score < 100, 'The game should be over.'
     "*** YOUR CODE HERE ***"
     if num_rolls == 0:
-        return max([int(opponent_score) / 10 , int(opponent_score % 10)]) + 1
+        return int(max([int(opponent_score) / 10 , int(opponent_score % 10)]) + 1)
     return roll_dice(num_rolls,dice)
 
 # Playing a game
@@ -96,7 +96,7 @@ def play(strategy0, strategy1, goal=GOAL_SCORE):
         score = take_turn(strategy0(score,opponent_score),opponent_score,select_dice(score,opponent_score))
         opponent_score = take_turn(strategy1(opponent_score,score),score,select_dice(opponent_score,score))
         if (score == 2*opponent_score or (opponent_score == 2*score)):
-            score,opponent_score = opponent_score,score      
+            score,opponent_score = int(opponent_score),int(score)      
     return score, opponent_score  # You may wish to change this line.
 
 #######################
@@ -146,6 +146,16 @@ def make_averaged(fn, num_samples=1000):
     Thus, the average value is 6.0.
     """
     "*** YOUR CODE HERE ***"
+    
+    def avg_rtn(*args):
+        sum = 0
+        for i in range(num_samples):
+            sum += fn(*args)
+        return sum/num_samples
+
+
+    return avg_rtn
+
 
 def max_scoring_num_rolls(dice=six_sided):
     """Return the number of dice (1 to 10) that gives the highest average turn
