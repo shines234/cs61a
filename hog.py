@@ -1,5 +1,6 @@
 """The Game of Hog."""
 
+from numpy import roll
 from dice import four_sided, six_sided, make_test_dice
 from ucb import main, trace, log_current_line, interact
 
@@ -152,8 +153,6 @@ def make_averaged(fn, num_samples=1000):
         for i in range(num_samples):
             sum += fn(*args)
         return sum/num_samples
-
-
     return avg_rtn
 
 
@@ -177,7 +176,14 @@ def max_scoring_num_rolls(dice=six_sided):
     10
     """
     "*** YOUR CODE HERE ***"
-
+    max = 0
+    for i in range(1,11):
+        score = make_averaged(roll_dice)(i,dice)
+        print(f"{i} dice scores {score} on average")
+        if score > max:
+            max = score
+    return max
+    
 def winner(strategy0, strategy1):
     """Return 0 if strategy0 wins against strategy1, and 1 otherwise."""
     score0, score1 = play(strategy0, strategy1)
